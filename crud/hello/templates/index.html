@@ -4,34 +4,145 @@
 <head>
     <meta charset="utf-8" />
     <title>Для Димы</title>
+    <!-- Ссылка на CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/hello.css' %}">
+    <!-- Ссылка на JavaScript -->
+    <script src="{% static 'js/data_entry_popup.js' %}"></script>
+    <!-- Добавить CSS для DataTables -->
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+    <!-- Функция диалогового окна подтверждения -->
+    <script>
+        function confirmDelete() {
+        var password = prompt('Введите пароль для удаления:');
+        if (password === '1234') { // Замените 'correctPassword' на фактический пароль
+            if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+                alert('Пользователь успешно удален.');
+                return true;
+            } else {
+                alert('Удаление отменено.');
+                return false;
+            }
+        } else {
+            alert('Неверный пароль!');
+            return false;
+        }
+    }
+    </script>
+    <!-- Функция подтверждения создания записи -->
+    <script>
+        function confirmCreate() {
+            return confirm('Вы уверены, что хотите создать новую запись?');
+        }
+    </script>
+    <!-- Функция валидации формы -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.querySelector("form");
+            form.onsubmit = function() {
+                var name = form.querySelector('input[name="name"]').value;
+                var lastname = form.querySelector('input[name="lastname"]').value;
+                if (name.trim() === "" || lastname.trim() === "") {
+                    alert("Пожалуйста, заполните все поля.");
+                    return false;
+                }
+                return true;
+            };
+        });
+    </script>
+    <!-- Функция подтверждения изменения -->
+    <script>
+        function confirmEdit(id) {
+            var password = prompt('Введите пароль для редактирования:');
+            if (password === '1234') { // Замените '1234' на ваш фактический пароль
+                // Перенаправление на страницу редактирования, если пароль верный
+                window.location.href = 'edit/' + id;
+            } else {
+                alert('Неверный пароль!');
+                return false;
+            }
+        }
+    </script>
+    <script>
+        function validateEditForm() {
+            var name = document.querySelector('input[name="name"]').value;
+            var lastname = document.querySelector('input[name="lastname"]').value;
+            if (name.trim() === "" || lastname.trim() === "") {
+                alert("Поля 'Имя' и 'Фамилия' не могут быть пустыми.");
+                return false;
+            }
+            return true;
+        }
+
+        // Добавьте эту функцию к событию onsubmit формы редактирования
+        document.addEventListener("DOMContentLoaded", function() {
+            var editForm = document.querySelector('form#editForm'); // Замените 'form#editForm' на селектор вашей формы редактирования
+            if(editForm) {
+                editForm.onsubmit = validateEditForm;
+            }
+        });
+    </script>
+    <script>
+        // ... Ваши другие функции ...
+
+        // Функция валидации формы редактирования
+        function validateEditForm() {
+            var name = document.querySelector('input[name="name"]').value;
+            var lastname = document.querySelector('input[name="lastname"]').value;
+            if (name.trim() === "" || lastname.trim() === "") {
+                alert("Поля 'Имя' и 'Фамилия' не могут быть пустыми.");
+                return false;
+            }
+            return true;
+        }
+
+        // Добавление функции валидации к событию onsubmit формы редактирования
+        document.addEventListener("DOMContentLoaded", function() {
+            var editForm = document.querySelector('form#editForm');
+            if(editForm) {
+                editForm.onsubmit = validateEditForm;
+            }
+        });
+    </script>  
 </head>
 <body>
-    <form method="POST" action="create/">
+    <!-- Форма для создания записи -->
+    <form method="POST" action="create/" onsubmit="return confirmCreate();">
         {% csrf_token %}
-        <p>
-            <label>Введите имя</label><br>
-            <input type="text" name="name" />
-        </p>
-        <p>
-            <label>Введите фамилию</label><br>
-            <input type="text" name="lastname" />
-        </p>
-        <input type="submit" value="Сохранить" >
+        <div class="form-content">
+            <p>
+                <label>Введите имя</label><br>
+                <input type="text" name="name" />
+            </p>
+            <p>
+                <label>Введите фамилию</label><br>
+                <input type="text" name="lastname" />
+            </p>
+            <input type="submit" value="Сохранить" >
+        </div>
     </form>
+    <!-- Проверка наличия пользователей -->
     {% if people.count > 0 %}
     <h2>Список пользователей</h2>
-    <table>
+    <!-- Добавить таблицу DataTables -->
+    <table id="example">
         <thead><th>Id</th><th>Имя</th><th>Фамилия</th><th></th></thead>
+        <!-- Цикл для отображения пользователей -->
         {% for person in people %}
         <tr>
             <td>{{ person.id }}</td>
             <td>{{ person.name }}</td>
             <td>{{ person.lastname }}</td>
-            <td><a href="edit/{{person.id}}">Изменить</a> | <a href="delete/{{person.id}}">Удалить</a></td>
+            <td><a href="edit/{{person.id}}">Изменить</a> | <a href="delete/{{person.id}}" onclick="return confirmDelete();">Удалить</a></td>
         </tr>
         {% endfor %}
     </table>
+    
+    <!-- Инициализация DataTables -->
+    <script>
+        $(function(){
+            $("#example").dataTable();
+        });
+    </script>
     {% endif %}
 </body>
 </html>

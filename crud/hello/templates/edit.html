@@ -5,19 +5,20 @@
     <meta charset="utf-8" />
     <title>METANIT.COM</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/hello.css' %}">
+    <script src="{% static 'js/data_entry_popup.js' %}"></script>
 </head>
 <body>
     <form method="POST">
         {% csrf_token %}
         <p>
             <label>Введите имя</label><br>
-            <input type="text" name="name" value="{{person.name}}" />
+            <input type="text" name="name" value="{{person.name}}" required />
         </p>
         <p>
             <label>Введите возраст</label><br>
-            <input type="text" name="lastname" value="{{person.lastname}}" />
+            <input type="text" name="lastname" value="{{person.lastname}}" required />
         </p>
-        <input type="submit" value="Сохранить" >
+        <input type="submit" value="Внести изменения">
     </form>
 </body>
 </html>

@@ -1,118 +1,96 @@
-/* Общие стили для форм */
-/* Убирает нижнее подчеркивание для всех ссылок в таблице */
-table a {
-    text-decoration: none;
-    transition: transform 0.3s ease;
+/* Основные стили */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    color: #333;
 }
 
-/* Убирает нижнее подчеркивание при наведении для всех ссылок в таблице */
-/* Изменение цвета при наведении для всех ссылок в таблице */
-table a:hover {
-    color: #af2121; /* Цвет текста при наведении */
-    text-decoration: none; /* Убирает нижнее подчеркивание при наведении */
-    transform: scale(1.1); /* Увеличивает текст на 10% */
+h2 {
+    color: #444;
+    text-align: center; /* Центрирование заголовка */
 }
 
+/* Стили для формы */
 form {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 300px;
-    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Убрано свойство min-height */
+    margin-bottom: 0; /* Убрано расстояние до таблицы */
+}
+
+/* Обертка для содержимого формы */
+.form-content {
+    width: 100%;
+    max-width: 400px;
+    margin: auto; /* Центрирование формы на странице */
 }
 
 label {
     display: block;
     margin-bottom: 5px;
     color: #333;
+    font-size: 14px;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="submit"] {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 10px; /* Отступ между полями ввода */
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box;
 }
 
+
 input[type="submit"] {
+    width: auto; /* Изменено с 100% на auto */
+    padding: 10px;
+    margin: 0 auto; /* Добавлено для центрирования кнопки */
     background-color: #5cb85c;
     color: white;
-    padding: 10px 15px;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-    width: 100%;
+    display: block; /* Добавлено для возможности центрирования */
 }
+
 
 input[type="submit"]:hover {
     background-color: #4cae4c;
 }
 
-/* Стили для таблицы, если она присутствует */
+/* Стили для таблицы */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Добавлен небольшой отступ сверху */
 }
 
 th, td {
-    text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #f0f0f0;
 }
 
-tr:hover {
-    background-color: #e8e8e8;
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
+/* Стили для ссылок редактирования и удаления */
 a {
-    color: #000000;
     text-decoration: none;
+    color: #337ab7;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-/* Для всех элементов <p> */
-p {
-    font-weight: bold;
-}
-
-/* Для заголовков <h2> */
-h2 {
-    font-weight: bold;
-}
-
-/* Для всех ячеек таблицы <td> */
-td {
-    font-weight: bold;
-}
-
-/* Стиль для кнопок Изменить и Удалить */
-.edit-btn, .delete-btn {
-    background-color: #f44336; /* Красный цвет фона */
-    color: white; /* Белый текст */
-    padding: 10px 20px; /* Паддинг вокруг текста */
-    text-decoration: none; /* Убрать подчеркивание */
-    border: none; /* Убрать границу */
-    border-radius: 5px; /* Скругленные углы */
-    cursor: pointer; /* Курсор в виде руки при наведении */
-    transition: background-color 0.3s; /* Плавное изменение цвета при наведении */
-}
-
-/* Изменение фона при наведении */
-.edit-btn:hover {
-    background-color: #4CAF50; /* Зеленый цвет фона */
-}
-
-.delete-btn:hover {
-    background-color: #D32F2F; /* Темно-красный цвет фона */
-}
